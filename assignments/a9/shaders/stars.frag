@@ -54,5 +54,6 @@ void main()
     vec2 uv = vec2(vtx_uv.x, -vtx_uv.y);
     vec3 buzzColor = texture(tex_buzz, uv).xyz;
 
-    frag_color = vec4(mix(outputColor, buzzColor, (sin(iTime) + 1) * .5 * .2), 1.0);
+    // only stars, no buzz
+    frag_color = vec4(outputColor, 1.0);
 }
