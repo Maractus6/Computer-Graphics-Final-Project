@@ -91,21 +91,20 @@ public:
         //// (4) Sky sphere (if you want to implement a sky sphere, enlarge the size of the sphere to make it colver the entire scene and update its shaders for texture colors)
         //// By default, Option (2) (Buzz stars) is turned on, and all the other three are commented out.
         
-        //// Background Option (1): Gradient color
-        /*
+        // Background Option (1): Gradient color
         {
             auto bg = Add_Interactive_Object<OpenGLBackground>();
             bg->Set_Color(OpenGLColor(0.1f, 0.1f, 0.1f, 1.f), OpenGLColor(0.3f, 0.1f, .1f, 1.f));
             bg->Initialize();
         }
-        */
 
         //// Background Option (2): Programmable Canvas
         //// By default, we load a GT buzz + a number of stars
         {
             bgEffect = Add_Interactive_Object<OpenGLBgEffect>();
             bgEffect->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("stars"));
-            bgEffect->Add_Texture("tex_buzz", OpenGLTextureLibrary::Get_Texture("buzz_color")); // bgEffect can also Add_Texture
+            // removed buzz
+            // bgEffect->Add_Texture("tex_buzz", OpenGLTextureLibrary::Get_Texture("buzz_color")); // bgEffect can also Add_Texture
             bgEffect->Initialize();
         }
         
@@ -297,7 +296,7 @@ public:
 
             obj->Set_Model_Matrix(t);
 
-            obj->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("buzz_color"));
+            // obj->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("buzz_color"));
 
             obj->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
         }
