@@ -17,6 +17,8 @@
 #ifndef __Main_cpp__
 #define __Main_cpp__
 
+#define PI 3.14159265359
+
 #ifdef __APPLE__
 #define CLOCKS_PER_SEC 100000
 #endif
@@ -64,13 +66,21 @@ public:
         //// Here "tex_sampler" is the name of the texture sampler2D you used in your shader, and
         //// "tex_name" needs to be one of the texture names you created previously with Add_Texture_From_File()
 
-        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_color.png", "sphere_color");
-        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_normal.png", "sphere_normal");
-        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/bunny_color.jpg", "bunny_color");
-        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/bunny_normal.png", "bunny_normal");
-        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/window.png", "window_color");
-        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/buzz_color.png", "buzz_color");
-        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/star.png", "star_color");
+        //OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_color.png", "sphere_color");
+        //OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/earth_normal.png", "sphere_normal");
+        //OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/bunny_color.jpg", "bunny_color");
+        //OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/bunny_normal.png", "bunny_normal");
+        // OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/window.png", "window_color");
+        // OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/buzz_color.png", "buzz_color");
+        // OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/star.png", "star_color");
+
+        // TODO Amanda: All the textures needed for the project
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/Earth.jpg", "Earth");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/Among_Us_Diffuse.jpg", "Among_Us_Diffuse");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/Among_Us_Normal.jpg", "Among_Us_Normal");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/spaceship.png", "spaceship");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/spaceship_normal.png", "spaceship_normal");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/mars.jpg", "mars");
 
         //// Add all the lights you need for the scene (no more than 4 lights)
         //// The four parameters are position, ambient, diffuse, and specular.
@@ -131,133 +141,288 @@ public:
 
         //// Background Option (4): Sky sphere
         //// Here we provide a default implementation of a textured sphere; customize it for your own sky sphere
-        {
-            //// create object by reading an obj mesh
-            auto sphere = Add_Obj_Mesh_Object("obj/sphere.obj");
+        // {
+        //     //// create object by reading an obj mesh
+        //     auto sphere = Add_Obj_Mesh_Object("obj/sphere.obj");
 
-            //// set object's transform
-            Matrix4f t;
-            t << 1, 0, 0, -1.5,
-                0, 1, 0, -1,
-                0, 0, 1, 0.5,
-                0, 0, 0, 1;
-            sphere->Set_Model_Matrix(t);
+        //     //// set object's transform
+        //     Matrix4f t;
+        //     t << 1, 0, 0, -1.5,
+        //         0, 1, 0, -1,
+        //         0, 0, 1, 0.5,
+        //         0, 0, 0, 1;
+        //     sphere->Set_Model_Matrix(t);
 
-            //// set object's material
-            sphere->Set_Ka(Vector3f(0.1, 0.1, 0.1));
-            sphere->Set_Kd(Vector3f(0.7, 0.7, 0.7));
-            sphere->Set_Ks(Vector3f(2, 2, 2));
-            sphere->Set_Shininess(128);
+        //     //// set object's material
+        //     sphere->Set_Ka(Vector3f(0.1, 0.1, 0.1));
+        //     sphere->Set_Kd(Vector3f(0.7, 0.7, 0.7));
+        //     sphere->Set_Ks(Vector3f(2, 2, 2));
+        //     sphere->Set_Shininess(128);
 
-            //// bind texture to object
-            sphere->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
-            sphere->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
+        //     //// bind texture to object
+        //     sphere->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
+        //     sphere->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
 
-            //// bind shader to object
-            sphere->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
-        }
+        //     //// bind shader to object
+        //     sphere->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        // }
 
         //// Here we load a bunny object with the basic shader to show how to add an object into the scene
+        // {
+        //     //// create object by reading an obj mesh
+        //     auto bunny = Add_Obj_Mesh_Object("obj/bunny.obj");
+
+        //     //// set object's transform
+        //     Matrix4f t;
+        //     t << 1, 0, 0, 1.5,
+        //         0, 1, 0, 0,
+        //         0, 0, 1, 0,
+        //         0, 0, 0, 1;
+        //     bunny->Set_Model_Matrix(t);
+
+        //     //// set object's material
+        //     bunny->Set_Ka(Vector3f(0.1, 0.1, 0.1));
+        //     bunny->Set_Kd(Vector3f(0.7, 0.7, 0.7));
+        //     bunny->Set_Ks(Vector3f(2, 2, 2));
+        //     bunny->Set_Shininess(128);
+
+        //     //// bind texture to object
+        //     bunny->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("bunny_color"));
+        //     bunny->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("bunny_normal"));
+
+        //     //// bind shader to object
+        //     bunny->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        // }
+
+        // Amanda: Loading the Among Us object
         {
             //// create object by reading an obj mesh
-            auto bunny = Add_Obj_Mesh_Object("obj/bunny.obj");
+            auto amongUs = Add_Obj_Mesh_Object("obj/among_us.obj");
 
             //// set object's transform
             Matrix4f t;
-            t << 1, 0, 0, 1.5,
-                0, 1, 0, 0,
-                0, 0, 1, 0,
+            Matrix4f d;
+            Matrix4f s;
+            float theta = PI / 6;
+            float theta_y = PI / 8;
+            t << 0.005, 0, 0, 0,
+                0, 0.005, 0, 0,
+                0, 0, 0.005, 0,
                 0, 0, 0, 1;
-            bunny->Set_Model_Matrix(t);
+            // Rotate some degrees around y axis
+            d << cos(theta_y), 0, -sin(theta_y), 0,
+                0, 1, 0, 0,
+                sin(theta_y), 0, cos(theta_y), 0,
+                0, 0, 0, 1;
+            // Rotate 30 degrees around the z axis and translate
+            s << cos(theta), -sin(theta), 0, 1,
+                sin(theta), cos(theta), 0, -0.2,
+                0, 0, 1, -2.5,
+                0, 0, 0, 1;
+            t = s*d*t;
+            amongUs->Set_Model_Matrix(t);
 
             //// set object's material
-            bunny->Set_Ka(Vector3f(0.1, 0.1, 0.1));
-            bunny->Set_Kd(Vector3f(0.7, 0.7, 0.7));
-            bunny->Set_Ks(Vector3f(2, 2, 2));
-            bunny->Set_Shininess(128);
+            amongUs->Set_Ka(Vector3f(0.1, 0.1, 0.1));
+            amongUs->Set_Kd(Vector3f(0.7, 0.7, 0.7));
+            amongUs->Set_Ks(Vector3f(2, 2, 2));
+            amongUs->Set_Shininess(128);
 
             //// bind texture to object
-            bunny->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("bunny_color"));
-            bunny->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("bunny_normal"));
+            amongUs->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("Among_Us_Diffuse"));
+            amongUs->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("Among_Us_Normal"));
 
             //// bind shader to object
-            bunny->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+            amongUs->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        }
+
+        // Amanda: Loading the Earth object
+        {
+            //// create object by reading an obj mesh
+            auto earth = Add_Obj_Mesh_Object("obj/Earth.obj");
+
+            //// set object's transform
+            Matrix4f t;
+            Matrix4f d;
+            float theta = 3 * PI / 2;
+            // Scale up
+            t << 5, 0, 0, 0,
+                0, 5, 0, 0,
+                0, 0, 5, 0,
+                0, 0, 0, 1;
+            // rotate around y axis and translate
+            d << cos(theta), 0, sin(theta), -15,
+                0, 1, 0, 5,
+                -sin(theta), 0, cos(theta), -50,
+                0, 0, 0, 1;
+            t = d*t;
+            earth->Set_Model_Matrix(t);
+
+            //// set object's material
+            earth->Set_Ka(Vector3f(0.1, 0.1, 0.1));
+            earth->Set_Kd(Vector3f(0.7, 0.7, 0.7));
+            earth->Set_Ks(Vector3f(2, 2, 2));
+            earth->Set_Shininess(128);
+
+            //// bind texture to object
+            earth->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("Earth"));
+
+            //// bind shader to object
+            earth->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        }
+
+        // Amanda: Loading the Mars object
+        {
+            //// create object by reading an obj mesh
+            auto mars = Add_Obj_Mesh_Object("obj/Mars.obj");
+
+            //// set object's transform
+            Matrix4f t;
+            Matrix4f d;
+            float theta = 3 * PI / 2;
+            // Scale up
+            t << 5, 0, 0, 0,
+                0, 5, 0, 0,
+                0, 0, 5, 0,
+                0, 0, 0, 1;
+            // rotate around y axis and translate
+            d << cos(theta), 0, sin(theta), 15,
+                0, 1, 0, 5,
+                -sin(theta), 0, cos(theta), -50,
+                0, 0, 0, 1;
+            t = d*t;
+            mars->Set_Model_Matrix(t);
+
+            //// set object's material
+            mars->Set_Ka(Vector3f(0.1, 0.1, 0.1));
+            mars->Set_Kd(Vector3f(0.7, 0.7, 0.7));
+            mars->Set_Ks(Vector3f(2, 2, 2));
+            mars->Set_Shininess(128);
+
+            //// bind texture to object
+            mars->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("mars"));
+
+            //// bind shader to object
+            mars->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        }
+
+        // Amanda: Loading the Spaceship object
+        {
+            //// create object by reading an obj mesh
+            auto spaceship = Add_Obj_Mesh_Object("obj/spaceship.obj");
+
+            //// set object's transform
+            Matrix4f t;
+            Matrix4f d;
+            Matrix4f s;
+            float theta = PI / 2;
+            float theta_z = PI / 8;
+            // Scale down
+            t << 0.005, 0, 0, 0,
+                0, 0.005, 0, 0,
+                0, 0, 0.005, 0,
+                0, 0, 0, 1;
+            // rotate 90 degrees around y axis
+            d << cos(theta), 0, sin(theta), 0,
+                0, 1, 0, 0,
+                -sin(theta), 0, cos(theta), 0,
+                0, 0, 0, 1;
+            // Rotate some degrees around the z axis and translate
+            s << cos(theta_z), -sin(theta_z), 0, -1,
+                sin(theta_z), cos(theta_z), 0, 1,
+                0, 0, 1, -10,
+                0, 0, 0, 1;
+            t = s*d*t;
+            spaceship->Set_Model_Matrix(t);
+
+            //// set object's material
+            spaceship->Set_Ka(Vector3f(0.1, 0.1, 0.1));
+            spaceship->Set_Kd(Vector3f(0.7, 0.7, 0.7));
+            spaceship->Set_Ks(Vector3f(2, 2, 2));
+            spaceship->Set_Shininess(128);
+
+            //// bind texture to object
+            spaceship->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("spaceship"));
+            spaceship->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("spaceship_normal"));
+
+            //// bind shader to object
+            spaceship->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
         }
 
         //// Here we show an example of adding a mesh with noise-terrain (A6)
-        {
-            //// create object by reading an obj mesh
-            auto terrain = Add_Obj_Mesh_Object("obj/plane.obj");
+        // {
+        //     //// create object by reading an obj mesh
+        //     auto terrain = Add_Obj_Mesh_Object("obj/plane.obj");
 
-            //// set object's transform
-            Matrix4f r, s, t;
-            r << 1, 0, 0, 0,
-                0, 0.5, 0.67, 0,
-                0, -0.67, 0.5, 0,
-                0, 0, 0, 1;
-            s << 0.5, 0, 0, 0,
-                0, 0.5, 0, 0,
-                0, 0, 0.5, 0,
-                0, 0, 0, 1;
-            t << 1, 0, 0, -2,
-                 0, 1, 0, 0.5,
-                 0, 0, 1, 0,
-                 0, 0, 0, 1,
-            terrain->Set_Model_Matrix(t * s * r);
+        //     //// set object's transform
+        //     Matrix4f r, s, t;
+        //     r << 1, 0, 0, 0,
+        //         0, 0.5, 0.67, 0,
+        //         0, -0.67, 0.5, 0,
+        //         0, 0, 0, 1;
+        //     s << 0.5, 0, 0, 0,
+        //         0, 0.5, 0, 0,
+        //         0, 0, 0.5, 0,
+        //         0, 0, 0, 1;
+        //     t << 1, 0, 0, -2,
+        //          0, 1, 0, 0.5,
+        //          0, 0, 1, 0,
+        //          0, 0, 0, 1,
+        //     terrain->Set_Model_Matrix(t * s * r);
 
-            //// set object's material
-            terrain->Set_Ka(Vector3f(0.1f, 0.1f, 0.1f));
-            terrain->Set_Kd(Vector3f(0.7f, 0.7f, 0.7f));
-            terrain->Set_Ks(Vector3f(1, 1, 1));
-            terrain->Set_Shininess(128.f);
+        //     //// set object's material
+        //     terrain->Set_Ka(Vector3f(0.1f, 0.1f, 0.1f));
+        //     terrain->Set_Kd(Vector3f(0.7f, 0.7f, 0.7f));
+        //     terrain->Set_Ks(Vector3f(1, 1, 1));
+        //     terrain->Set_Shininess(128.f);
 
-            //// bind shader to object (we do not bind texture for this object because we create noise for texture)
-            terrain->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("terrain"));
-        }
+        //     //// bind shader to object (we do not bind texture for this object because we create noise for texture)
+        //     terrain->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("terrain"));
+        // }
 
         //// Here we show an example of adding a transparent object with alpha blending
         //// This example will be useful if you implement objects such as tree leaves, grass blades, flower pedals, etc.
         //// Alpha blending will be turned on automatically if your texture has the alpha channel
-        {
-            //// create object by reading an obj mesh
-            auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
+        // {
+        //     //// create object by reading an obj mesh
+        //     auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
 
-            //// set object's transform
-            Matrix4f t;
-            t << 1, 0, 0, -0.5,
-                0, 1, 0, 0,
-                0, 0, 1, 1.5,
-                0, 0, 0, 1;
-            sqad->Set_Model_Matrix(t);
+        //     //// set object's transform
+        //     Matrix4f t;
+        //     t << 1, 0, 0, -0.5,
+        //         0, 1, 0, 0,
+        //         0, 0, 1, 1.5,
+        //         0, 0, 0, 1;
+        //     sqad->Set_Model_Matrix(t);
 
-            //// bind texture to object
-            sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("window_color"));
+        //     //// bind texture to object
+        //     sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("window_color"));
 
-            //// bind shader to object
-            sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("blend"));
-        }
+        //     //// bind shader to object
+        //     sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("blend"));
+        // }
 
         //// Here we show an example of adding a billboard particle with a star shape using alpha blending
         //// The billboard is rendered with its texture and is always facing the camera.
         //// This example will be useful if you plan to implement a CPU-based particle system.
-        {
-            //// create object by reading an obj mesh
-            auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
+        // {
+        //     //// create object by reading an obj mesh
+        //     auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
 
-            //// set object's transform
-            Matrix4f t;
-            t << 1, 0, 0, 0,
-                 0, 1, 0, 0,
-                 0, 0, 1, 2.5,
-                 0, 0, 0, 1;
-            sqad->Set_Model_Matrix(t);
+        //     //// set object's transform
+        //     Matrix4f t;
+        //     t << 1, 0, 0, 0,
+        //          0, 1, 0, 0,
+        //          0, 0, 1, 2.5,
+        //          0, 0, 0, 1;
+        //     sqad->Set_Model_Matrix(t);
 
-            //// bind texture to object
-            sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("star_color"));
+        //     //// bind texture to object
+        //     sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("star_color"));
 
-            //// bind shader to object
-            sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("billboard"));
-        }
+        //     //// bind shader to object
+        //     sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("billboard"));
+        // }
 
         //// Here we show an example of shading (ray-tracing) a sphere with environment mapping
         /*
@@ -281,25 +446,25 @@ public:
         //// Here we create a mesh object with two triangle specified using a vertex array and a triangle array.
         //// This is an example showing how to create a mesh object without reading an .obj file. 
         //// If you are creating your own L-system, you may use this function to visualize your mesh.
-        {
-            std::vector<Vector3> vertices = { Vector3(0.5, 0, 0), Vector3(1, 0, 0), Vector3(1, 1, 0), Vector3(0, 1, 0) };
-            std::vector<Vector3i> elements = { Vector3i(0, 1, 2), Vector3i(0, 2, 3) };
-            auto obj = Add_Tri_Mesh_Object(vertices, elements);
-            // ! you can also set uvs 
-            obj->mesh.Uvs() = { Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1) };
+        // {
+        //     std::vector<Vector3> vertices = { Vector3(0.5, 0, 0), Vector3(1, 0, 0), Vector3(1, 1, 0), Vector3(0, 1, 0) };
+        //     std::vector<Vector3i> elements = { Vector3i(0, 1, 2), Vector3i(0, 2, 3) };
+        //     auto obj = Add_Tri_Mesh_Object(vertices, elements);
+        //     // ! you can also set uvs 
+        //     obj->mesh.Uvs() = { Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1) };
 
-            Matrix4f t;
-            t << 1, 0, 0, -0.5,
-                0, 1, 0, -1.5,
-                0, 0, 1, 0,
-                0, 0, 0, 1;
+        //     Matrix4f t;
+        //     t << 1, 0, 0, -0.5,
+        //         0, 1, 0, -1.5,
+        //         0, 0, 1, 0,
+        //         0, 0, 0, 1;
 
-            obj->Set_Model_Matrix(t);
+        //     obj->Set_Model_Matrix(t);
 
-            // obj->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("buzz_color"));
+        //     // obj->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("buzz_color"));
 
-            obj->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
-        }
+        //     obj->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        // }
 
         //// This for-loop updates the rendering model for each object on the list
         for (auto &mesh_obj : mesh_object_array){
