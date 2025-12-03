@@ -95,9 +95,9 @@ vec3 simSingleParticle(vec2 fragPos, vec2 initPos, vec2 initVel, float t, float 
     return fragColor;
 }
 
-void main()
-{
-    // Data for the shooting star
+vec3 shootingStar() {
+    // Data for the main shooting star
+    vec2 fragPos = vtx_pos.xy;
     vec2 initVel = vec2(1.5, 2.5);
     float t = mod(Time, DURATION);
     float brightness = .005;
@@ -114,10 +114,26 @@ void main()
         color = vec3(1.0, 0.984, 0.0); // yellow
     else
         color = vec3(1.0); // white
-    
+
+    vec3 shootingStar = simSingleParticle(fragPos, initPos, initVel, t, brightness, color);
+
+    // Data for the trailing particles
+    int numTrail = 20;
+    for(int i = 0; i < numTrail; i++) {
+        float trailTime = t - 0.01 * (i + 1);
+        float trailBrightness = brightness - 0.0002 * (i + 1);
+        shootingStar += simSingleParticle(fragPos, initPos, initVel, trailTime, trailBrightness, color);
+    }
+
+    return shootingStar;
+}
+
+void main()
+{
+    // Background stars
     vec3 outputColor = renderStars(vtx_pos.xy);
     // Shooting star
-    outputColor += simSingleParticle(vtx_pos.xy, initPos, initVel, t, brightness, color);
+    outputColor += shootingStar();
 
     // vec2 uv = vec2(vtx_uv.x, -vtx_uv.y);
     // vec3 buzzColor = texture(tex_buzz, uv).xyz;
