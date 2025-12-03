@@ -28,6 +28,7 @@ class MyDriver : public OpenGLViewer
     std::vector<OpenGLTriangleMesh *> mesh_object_array;
     OpenGLBgEffect *bgEffect = nullptr;
     OpenGLSkybox *skybox = nullptr;
+    OpenGLTriangleMesh *amongUs = nullptr;
     clock_t startTime;
 
 public:
@@ -197,30 +198,7 @@ public:
         // Amanda: Loading the Among Us object
         {
             //// create object by reading an obj mesh
-            auto amongUs = Add_Obj_Mesh_Object("obj/among_us.obj");
-
-            //// set object's transform
-            Matrix4f t;
-            Matrix4f d;
-            Matrix4f s;
-            float theta = PI / 6;
-            float theta_y = PI / 8;
-            t << 0.005, 0, 0, 0,
-                0, 0.005, 0, 0,
-                0, 0, 0.005, 0,
-                0, 0, 0, 1;
-            // Rotate some degrees around y axis
-            d << cos(theta_y), 0, -sin(theta_y), 0,
-                0, 1, 0, 0,
-                sin(theta_y), 0, cos(theta_y), 0,
-                0, 0, 0, 1;
-            // Rotate 30 degrees around the z axis and translate
-            s << cos(theta), -sin(theta), 0, 1,
-                sin(theta), cos(theta), 0, -0.2,
-                0, 0, 1, -2.5,
-                0, 0, 0, 1;
-            t = s*d*t;
-            amongUs->Set_Model_Matrix(t);
+            amongUs = Add_Obj_Mesh_Object("obj/among_us.obj");
 
             //// set object's material
             amongUs->Set_Ka(Vector3f(0.1, 0.1, 0.1));
@@ -242,8 +220,7 @@ public:
             auto earth = Add_Obj_Mesh_Object("obj/Earth.obj");
 
             //// set object's transform
-            Matrix4f t;
-            Matrix4f d;
+            Matrix4f t, d;
             float theta = 3 * PI / 2;
             // Scale up
             t << 5, 0, 0, 0,
@@ -277,8 +254,7 @@ public:
             auto mars = Add_Obj_Mesh_Object("obj/Mars.obj");
 
             //// set object's transform
-            Matrix4f t;
-            Matrix4f d;
+            Matrix4f t, d;
             float theta = 3 * PI / 2;
             // Scale up
             t << 5, 0, 0, 0,
@@ -312,9 +288,7 @@ public:
             auto spaceship = Add_Obj_Mesh_Object("obj/spaceship.obj");
 
             //// set object's transform
-            Matrix4f t;
-            Matrix4f d;
-            Matrix4f s;
+            Matrix4f t, d, s;
             float theta = PI / 2;
             float theta_z = PI / 8;
             // Scale down
@@ -517,6 +491,34 @@ public:
 
         if (skybox){
             skybox->setTime(GLfloat(clock() - startTime) / CLOCKS_PER_SEC);
+        }
+        
+        // Update Among Us bobbing motion
+        if (amongUs) {
+            float elapsedTime = GLfloat(clock() - startTime) / CLOCKS_PER_SEC;
+            float theta = PI / 6;
+            float theta_y = PI / 8;
+            float bobbingY = sin(elapsedTime) * 0.5;
+            
+            Matrix4f t, d, s, r;
+            t << 0.005, 0, 0, 0,
+                0, 0.005, 0, 0,
+                0, 0, 0.005, 0,
+                0, 0, 0, 1;
+            d << cos(theta_y), 0, -sin(theta_y), 0,
+                0, 1, 0, 0,
+                sin(theta_y), 0, cos(theta_y), 0,
+                0, 0, 0, 1;
+            s << cos(theta), -sin(theta), 0, 0,
+                sin(theta), cos(theta), 0, 0,
+                0, 0, 1, -2.5,
+                0, 0, 0, 1;
+            r << 1, 0, 0, 1,
+                0, 1, 0, bobbingY,
+                0, 0, 1, -2.5,
+                0, 0, 0, 1;
+            t = r*s*d*t;
+            amongUs->Set_Model_Matrix(t);
         }   
 
         OpenGLViewer::Toggle_Next_Frame();
