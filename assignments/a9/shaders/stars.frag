@@ -48,7 +48,17 @@ vec3 renderStars(vec2 uv)
         vec2 pos = hash2d(i) * 2. - 1.; // map to [-1, 1]
         float brightness = .0015;
         brightness *= sin(1.5 * t + i) * .5 + .5; // flicker
-        vec3 color = vec3(0.15, 0.71, 0.92);
+        // Use a random +37 seed for color 
+        float rnd = hash2d(i + 37.0).x;
+
+        // Pick a color randomly each star: blue, yellow, or white
+        vec3 color;
+        if(rnd < 0.33)
+            color = vec3(0.15, 0.71, 0.92); // blue
+        else if(rnd < 0.66)
+            color = vec3(1.0, 0.984, 0.0); // yellow
+        else
+            color = vec3(1.0); // white
 
         fragColor += renderParticle(uv, pos, brightness, color);
     }
