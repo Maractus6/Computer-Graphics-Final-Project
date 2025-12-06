@@ -61,6 +61,8 @@ public:
         OpenGLShaderLibrary::Instance()->Add_Shader_From_File("shaders/skybox.vert", "shaders/skybox.frag", "skybox");
         OpenGLShaderLibrary::Instance()->Add_Shader_From_File("shaders/billboard.vert", "shaders/fire.frag", "fire");
 
+        OpenGLShaderLibrary::Instance()->Add_Shader_From_File("shaders/billboard.vert", "shaders/fire.frag", "fire");
+
 
         //// Load all the textures you need for the scene
         //// In the function call of Add_Shader_From_File(), we specify two names:
@@ -77,6 +79,7 @@ public:
         //OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/bunny_normal.png", "bunny_normal");
         // OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/window.png", "window_color");
         // OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/buzz_color.png", "buzz_color");
+        OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/star.png", "star_color");
         OpenGLTextureLibrary::Instance()->Add_Texture_From_File("tex/star.png", "star_color");
 
         // TODO Amanda: All the textures needed for the project
@@ -203,6 +206,7 @@ public:
         {
             //// create object by reading an obj mesh
             amongUs = Add_Obj_Mesh_Object("obj/among_us.obj");
+            amongUs = Add_Obj_Mesh_Object("obj/among_us.obj");
 
             //// set object's material
             amongUs->Set_Ka(Vector3f(0.1, 0.1, 0.1));
@@ -262,6 +266,7 @@ public:
             auto spaceship = Add_Obj_Mesh_Object("obj/spaceship.obj");
 
             //// set object's transform
+            Matrix4f t, d, s;
             Matrix4f t, d, s;
             float theta = PI / 2;
             float theta_z = PI / 8;
@@ -354,7 +359,29 @@ public:
         {
             //// create object by reading an obj mesh
             auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
+        // Using the existing billboard object to display our fire object instead.
+        {
+            //// create object by reading an obj mesh
+            auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
 
+            //// fire should be under ship
+            Matrix4f t, d, s, flip;
+            float theta_z = PI / 1.7;    // rotate fire around z axis (to match ship tilt)
+            
+            s << cos(theta_z), -sin(theta_z), 0, -4.2,
+                sin(theta_z), cos(theta_z), 0, -1.1,
+                0, 0, 1, -10,
+                0, 0, 0, 1;
+            // Flip 180 degrees around x-axis (particle should be in reverse direction)
+            flip << 1, 0, 0, 0,
+                    0, -1, 0, 0,
+                    0, 0, -1, 0,
+                    0, 0, 0, 1;
+            t << 1, 0, 0, 0,
+                 0, 1, 0, 0,
+                 0, 0, 1, 0,
+                 0, 0, 0, 1;
+            sqad->Set_Model_Matrix(s *  flip * t);
             //// fire should be under ship
             Matrix4f t, d, s, flip;
             float theta_z = PI / 1.7;    // rotate fire around z axis (to match ship tilt)
@@ -376,7 +403,12 @@ public:
 
             //// bind texture to object
             // sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("star_color"));
+            //// bind texture to object
+            // sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("star_color"));
 
+            //// bind shader to object
+            sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("fire"));
+        }
             //// bind shader to object
             sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("fire"));
         }
