@@ -29,6 +29,8 @@ class MyDriver : public OpenGLViewer
     OpenGLBgEffect *bgEffect = nullptr;
     OpenGLSkybox *skybox = nullptr;
     OpenGLTriangleMesh *amongUs = nullptr;
+    OpenGLTriangleMesh* earth = nullptr;
+    OpenGLTriangleMesh* mars  = nullptr;
     clock_t startTime;
 
 public:
@@ -219,23 +221,8 @@ public:
         // Amanda: Loading the Earth object
         {
             //// create object by reading an obj mesh
-            auto earth = Add_Obj_Mesh_Object("obj/Earth.obj");
-
-            //// set object's transform
-            Matrix4f t, d;
-            float theta = 3 * PI / 2;
-            // Scale up
-            t << 5, 0, 0, 0,
-                0, 5, 0, 0,
-                0, 0, 5, 0,
-                0, 0, 0, 1;
-            // rotate around y axis and translate
-            d << cos(theta), 0, sin(theta), -15,
-                0, 1, 0, 5,
-                -sin(theta), 0, cos(theta), -50,
-                0, 0, 0, 1;
-            t = d*t;
-            earth->Set_Model_Matrix(t);
+            earth = Add_Obj_Mesh_Object("obj/Earth.obj");
+            
 
             //// set object's material
             earth->Set_Ka(Vector3f(0.1, 0.1, 0.1));
@@ -253,23 +240,8 @@ public:
         // Amanda: Loading the Mars object
         {
             //// create object by reading an obj mesh
-            auto mars = Add_Obj_Mesh_Object("obj/Mars.obj");
+            mars = Add_Obj_Mesh_Object("obj/Mars.obj");
 
-            //// set object's transform
-            Matrix4f t, d;
-            float theta = 3 * PI / 2;
-            // Scale up
-            t << 5, 0, 0, 0,
-                0, 5, 0, 0,
-                0, 0, 5, 0,
-                0, 0, 0, 1;
-            // rotate around y axis and translate
-            d << cos(theta), 0, sin(theta), 15,
-                0, 1, 0, 5,
-                -sin(theta), 0, cos(theta), -50,
-                0, 0, 0, 1;
-            t = d*t;
-            mars->Set_Model_Matrix(t);
 
             //// set object's material
             mars->Set_Ka(Vector3f(0.1, 0.1, 0.1));
@@ -530,7 +502,71 @@ public:
                 0, 0, 0, 1;
             t = r*s*d*t;
             amongUs->Set_Model_Matrix(t);
-        }   
+        }
+        if (earth) {
+            
+            float elapsedTime = GLfloat(clock() - startTime) / CLOCKS_PER_SEC;
+
+            // Spin speed (Earth day)
+            float spin = elapsedTime * .1f;   
+
+
+            //// set object's transform
+             Matrix4f t, d;
+            float theta = 3 * PI / 2;
+            //Scale up
+            t << 8, 0, 0, 0,
+                0, 8, 0, 0,
+                0, 0, 8, 0,
+                0, 0, 0, 1;
+            // rotate around y axis and translate
+            d << cos(spin * theta), 0, sin(spin *  theta), -15,
+                0, 1, 0, 0,
+                -sin(spin * theta), 0, cos(spin * theta), -50,
+                0, 0, 0, 1;
+            t = d*t;
+            earth->Set_Model_Matrix(t);
+
+        }
+        if (mars) {
+            
+            float elapsedTime = GLfloat(clock() - startTime) / CLOCKS_PER_SEC;
+
+            // Spin speed (Earth day)
+            float spin = elapsedTime * .2f;   
+            float tiltAngle = 23.5f * PI / 180.0f; 
+
+
+            //// set object's transform
+            Matrix4f t, d, tilt, trans;
+            float theta = 3 * PI / 2;
+
+            // Scale up
+            t << 5, 0, 0, 0,
+                0, 5, 0, 0,
+                0, 0, 5, 0,
+                0, 0, 0, 1;
+            // tilt the angle of rotation
+            tilt << cos(tiltAngle), -sin(tiltAngle), 0, 0,
+                sin(tiltAngle),  cos(tiltAngle), 0, 0,
+                0,0,1, 0,
+                0, 0,  0, 1;
+
+            // rotate around y axis
+            d << cos(spin *  theta), 0, sin(spin *  theta), 0,
+                0, 1, 0, 0,
+                -sin(spin *  theta), 0, cos(spin *  theta), 0,
+                0, 0, 0, 1;
+            // translate 
+            trans << 1, 0, 0, 15,
+                0, 1, 0, 5,
+                0, 0, 1, -50,
+                0, 0, 0, 1;
+
+            t = trans * tilt * d * t;
+            mars->Set_Model_Matrix(t);
+
+        }
 
         OpenGLViewer::Toggle_Next_Frame();
     }
