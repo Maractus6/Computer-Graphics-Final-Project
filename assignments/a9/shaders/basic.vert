@@ -26,18 +26,22 @@ out vec3 vtx_model_position; // model space position
 out vec2 vtx_uv;
 out vec3 vtx_tangent;
 
+
 void main() {
     vec4 worldPos = model * vec4(pos.xyz, 1.);
     // ! do not support non-uniform scale
-    vec4 worldNormal = model * vec4(normal.xyz, 0.);
-    vec4 worldTangent = model * vec4(tangent.xyz, 0.);
 
-    vtx_normal = normalize(worldNormal.xyz);
     vtx_model_position = pos.xyz;
     vtx_position = worldPos.xyz;
+
+    mat3 normalMatrix = transpose(inverse(mat3(model)));
+    vtx_normal = normalize(normalMatrix * normal.xyz);
+    vtx_tangent = normalize(normalMatrix * tangent.xyz);
+
     vtx_color = vec4(v_color.rgb, 1.);
     vtx_uv = uv.xy;
-    vtx_tangent = worldTangent.xyz;
 
+    
     gl_Position = pvm * worldPos;
 }
+
