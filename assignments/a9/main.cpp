@@ -35,6 +35,8 @@ class MyDriver : public OpenGLViewer
     OpenGLTriangleMesh* mars  = nullptr;
     OpenGLTriangleMesh* moon  = nullptr;
     OpenGLTriangleMesh* asteroid  = nullptr;
+    OpenGLTriangleMesh* asteroid1  = nullptr;
+    OpenGLTriangleMesh* asteroid2  = nullptr;
     clock_t startTime;
 
 public:
@@ -342,6 +344,42 @@ public:
 
             //// bind shader to object
             asteroid->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        }
+
+        {
+            //// create object by reading an obj mesh
+            asteroid1 = Add_Obj_Mesh_Object("obj/asteroid.obj");
+            
+
+            //// set object's material
+            asteroid1->Set_Ka(Vector3f(0.1, 0.1, 0.1));
+            asteroid1->Set_Kd(Vector3f(0.7, 0.7, 0.7));
+            asteroid1->Set_Ks(Vector3f(2, 2, 2));
+            asteroid1->Set_Shininess(128);
+
+            //// bind texture to object
+            asteroid1->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("asteroid"));
+
+            //// bind shader to object
+            asteroid1->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
+        }
+
+        {
+            //// create object by reading an obj mesh
+            asteroid2 = Add_Obj_Mesh_Object("obj/asteroid.obj");
+            
+
+            //// set object's material
+            asteroid2->Set_Ka(Vector3f(0.1, 0.1, 0.1));
+            asteroid2->Set_Kd(Vector3f(0.7, 0.7, 0.7));
+            asteroid2->Set_Ks(Vector3f(2, 2, 2));
+            asteroid2->Set_Shininess(128);
+
+            //// bind texture to object
+            asteroid2->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("asteroid"));
+
+            //// bind shader to object
+            asteroid2->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
         }
 
         //// Here we show an example of adding a mesh with noise-terrain (A6)
@@ -681,7 +719,7 @@ public:
 
         }
 
-         // //maon rotating and revoling motion
+         // 
         if (asteroid) {
             
             float elapsedTime = GLfloat(clock() - startTime) / CLOCKS_PER_SEC;
@@ -738,6 +776,132 @@ public:
             
 
             asteroid->Set_Model_Matrix(marsd  * o * t * spin * scale);
+
+        }
+
+         
+        if (asteroid1) {
+            
+            float elapsedTime = GLfloat(clock() - startTime) / CLOCKS_PER_SEC;
+
+            // Spin speed 
+            float aSpinAngle = elapsedTime* 1.5f;   
+            float aOrbitAngle = elapsedTime * 0.3f;
+
+            
+            Matrix4f spin, o, t, scale, marsd, tilt;
+
+            // Spin
+            spin << 
+                cos(aSpinAngle), 0, sin(aSpinAngle), 0,
+                0, 1, 0, 0,
+                -sin(aSpinAngle), 0, cos(aSpinAngle), 0,
+                0, 0, 0, 1;
+
+            // Orbit
+            o <<
+                cos(aOrbitAngle + 4 * PI / 3), 0, sin(aOrbitAngle + 4 *  PI / 3), 0,
+                0, 1, 0, 0,
+                -sin(aOrbitAngle + 4*  PI / 3), 0, cos(aOrbitAngle + 4*PI / 3), 0,
+                0, 0, 0, 1;
+
+            
+            t <<
+                1, 0, 0, 10,  
+                0, 1, 0, 5,
+                0, 0, 1, 0,
+                0, 0, 0, 1;
+
+            
+            scale <<
+                .5, 0, 0, 0,
+                0, .5, 0, 0,
+                0, 0, .5, 0,
+                0, 0, 0, 1;
+
+        
+            tilt <<
+                1, 0,0, 0,
+                0,  cos(45.0f * PI / 180.0f), -sin(45.0f * PI / 180.0f), 0,
+                0,  sin(45.0f * PI / 180.0f),  cos(45.0f * PI / 180.0f), 0,
+                0, 0, 0, 1;
+
+            ///earth stuff
+                // Spin speed (Earth day)
+            float espin = elapsedTime * .2f; ;   
+
+            //// set object's transform
+            
+            float theta = 3 * PI / 2;
+            
+            // rotate around y axis and translate
+            marsd << 
+                1, 0, 0, 15,
+                0, 1, 0, 5,
+                0, 0, 1, -50,
+                0, 0, 0, 1;
+            
+
+            asteroid1->Set_Model_Matrix(marsd  * o * t * spin * scale);
+
+        }
+
+        if (asteroid2) {
+            
+            float elapsedTime = GLfloat(clock() - startTime) / CLOCKS_PER_SEC;
+
+            // Spin speed 
+            float aSpinAngle = elapsedTime* 1.5f;   
+            float aOrbitAngle = elapsedTime * .3f;
+
+            // --- Moon transforms ---
+            Matrix4f spin, o, t, scale, marsd;
+
+            // Spin
+            spin << 
+                cos(aSpinAngle), 0, sin(aSpinAngle), 0,
+                0, 1, 0, 0,
+                -sin(aSpinAngle), 0, cos(aSpinAngle), 0,
+                0, 0, 0, 1;
+
+            // Orbit
+            o <<
+                cos(aOrbitAngle + 2*PI / 3), 0, sin(aOrbitAngle + 2*PI / 3), 0,
+                0, 1, 0, 0,
+                -sin(aOrbitAngle + 2*PI / 3), 0, cos(aOrbitAngle + 2*PI / 3), 0,
+                0, 0, 0, 1;
+
+            
+            t <<
+                1, 0, 0, 10,  
+                0, 1, 0, 5,
+                0, 0, 1, 0 ,
+                0, 0, 0, 1;
+
+            
+            scale <<
+                .5, 0, 0, 0,
+                0, .5, 0, 0,
+                0, 0, .5, 0,
+                0, 0, 0, 1;
+
+            //mars stuff
+                
+            float espin = elapsedTime * .2f; ;   
+
+            //// set object's transform
+            
+            float theta = 3 * PI / 2;
+            
+            // rotate around y axis and translate
+            marsd << 
+                1, 0, 0, 15,
+                0, 1, 0, 5,
+                0, 0, 1, -50,
+                0, 0, 0, 1;
+            
+
+            asteroid2->Set_Model_Matrix(marsd  * o * t * spin * scale);
 
         }
 
