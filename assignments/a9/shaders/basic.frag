@@ -49,7 +49,7 @@ uniform sampler2D tex_normal;   /* texture sampler for normal vector */
 out vec4 frag_color;
 
 
-
+// reference: https://stackoverflow.com/questions/21994094/normal-mapping-and-phong-shading-with-incorrect-specular-component
 
 vec3 shading_texture_with_phong(light li, vec3 e, vec3 p, vec3 s, vec3 n)
 {

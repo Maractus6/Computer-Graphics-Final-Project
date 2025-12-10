@@ -419,7 +419,7 @@ public:
             amongUs->Set_Model_Matrix(t);
         }
         
-        //earth rotating motion
+        // reference: https://stackoverflow.com/questions/59752923/orbiting-and-spinning-rotation-in-opengl-using-glm
         if (earth) {
             
             float elapsedTime = GLfloat(clock() - startTime) / CLOCKS_PER_SEC;
