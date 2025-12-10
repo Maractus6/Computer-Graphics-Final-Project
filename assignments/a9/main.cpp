@@ -133,81 +133,6 @@ public:
             bgEffect->Initialize();
         }
         
-        //// Background Option (3): Sky box
-        //// Here we provide a default implementation of a sky box; customize it for your own sky box
-        /*
-        {
-            // from https://www.humus.name/index.php?page=Textures
-            const std::vector<std::string> cubemap_files{
-                "cubemap/posx.jpg",     //// + X
-                "cubemap/negx.jpg",     //// - X
-                "cubemap/posy.jpg",     //// + Y
-                "cubemap/negy.jpg",     //// - Y
-                "cubemap/posz.jpg",     //// + Z
-                "cubemap/negz.jpg",     //// - Z 
-            };
-            OpenGLTextureLibrary::Instance()->Add_CubeMap_From_Files(cubemap_files, "cube_map");
-
-            skybox = Add_Interactive_Object<OpenGLSkybox>();
-            skybox->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("skybox"));
-            skybox->Initialize();
-        }
-        */
-
-        //// Background Option (4): Sky sphere
-        //// Here we provide a default implementation of a textured sphere; customize it for your own sky sphere
-        // {
-        //     //// create object by reading an obj mesh
-        //     auto sphere = Add_Obj_Mesh_Object("obj/sphere.obj");
-
-        //     //// set object's transform
-        //     Matrix4f t;
-        //     t << 1, 0, 0, -1.5,
-        //         0, 1, 0, -1,
-        //         0, 0, 1, 0.5,
-        //         0, 0, 0, 1;
-        //     sphere->Set_Model_Matrix(t);
-
-        //     //// set object's material
-        //     sphere->Set_Ka(Vector3f(0.1, 0.1, 0.1));
-        //     sphere->Set_Kd(Vector3f(0.7, 0.7, 0.7));
-        //     sphere->Set_Ks(Vector3f(2, 2, 2));
-        //     sphere->Set_Shininess(128);
-
-        //     //// bind texture to object
-        //     sphere->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("sphere_color"));
-        //     sphere->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("sphere_normal"));
-
-        //     //// bind shader to object
-        //     sphere->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
-        // }
-
-        //// Here we load a bunny object with the basic shader to show how to add an object into the scene
-        // {
-        //     //// create object by reading an obj mesh
-        //     auto bunny = Add_Obj_Mesh_Object("obj/bunny.obj");
-
-        //     //// set object's transform
-        //     Matrix4f t;
-        //     t << 1, 0, 0, 1.5,
-        //         0, 1, 0, 0,
-        //         0, 0, 1, 0,
-        //         0, 0, 0, 1;
-        //     bunny->Set_Model_Matrix(t);
-
-        //     //// set object's material
-        //     bunny->Set_Ka(Vector3f(0.1, 0.1, 0.1));
-        //     bunny->Set_Kd(Vector3f(0.7, 0.7, 0.7));
-        //     bunny->Set_Ks(Vector3f(2, 2, 2));
-        //     bunny->Set_Shininess(128);
-
-        //     //// bind texture to object
-        //     bunny->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("bunny_color"));
-        //     bunny->Add_Texture("tex_normal", OpenGLTextureLibrary::Get_Texture("bunny_normal"));
-
-        //     //// bind shader to object
-        //     bunny->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
-        // }
 
         // Amanda: Loading the Among Us object
         {
@@ -382,58 +307,6 @@ public:
             asteroid2->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
         }
 
-        //// Here we show an example of adding a mesh with noise-terrain (A6)
-        // {
-        //     //// create object by reading an obj mesh
-        //     auto terrain = Add_Obj_Mesh_Object("obj/plane.obj");
-
-        //     //// set object's transform
-        //     Matrix4f r, s, t;
-        //     r << 1, 0, 0, 0,
-        //         0, 0.5, 0.67, 0,
-        //         0, -0.67, 0.5, 0,
-        //         0, 0, 0, 1;
-        //     s << 0.5, 0, 0, 0,
-        //         0, 0.5, 0, 0,
-        //         0, 0, 0.5, 0,
-        //         0, 0, 0, 1;
-        //     t << 1, 0, 0, -2,
-        //          0, 1, 0, 0.5,
-        //          0, 0, 1, 0,
-        //          0, 0, 0, 1,
-        //     terrain->Set_Model_Matrix(t * s * r);
-
-        //     //// set object's material
-        //     terrain->Set_Ka(Vector3f(0.1f, 0.1f, 0.1f));
-        //     terrain->Set_Kd(Vector3f(0.7f, 0.7f, 0.7f));
-        //     terrain->Set_Ks(Vector3f(1, 1, 1));
-        //     terrain->Set_Shininess(128.f);
-
-        //     //// bind shader to object (we do not bind texture for this object because we create noise for texture)
-        //     terrain->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("terrain"));
-        // }
-
-        //// Here we show an example of adding a transparent object with alpha blending
-        //// This example will be useful if you implement objects such as tree leaves, grass blades, flower pedals, etc.
-        //// Alpha blending will be turned on automatically if your texture has the alpha channel
-        // {
-        //     //// create object by reading an obj mesh
-        //     auto sqad = Add_Obj_Mesh_Object("obj/sqad.obj");
-
-        //     //// set object's transform
-        //     Matrix4f t;
-        //     t << 1, 0, 0, -0.5,
-        //         0, 1, 0, 0,
-        //         0, 0, 1, 1.5,
-        //         0, 0, 0, 1;
-        //     sqad->Set_Model_Matrix(t);
-
-        //     //// bind texture to object
-        //     sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("window_color"));
-
-        //     //// bind shader to object
-        //     sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("blend"));
-        // }
 
         // Using the existing billboard object to display our fire object instead.
         {
@@ -459,56 +332,11 @@ public:
                  0, 0, 0, 1;
             sqad->Set_Model_Matrix(s *  flip * t);
 
-            //// bind texture to object
-            // sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("star_color"));
-            //// bind texture to object
-            // sqad->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("star_color"));
 
             //// bind shader to object
             sqad->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("fire"));
         }
         
-        //// Here we show an example of shading (ray-tracing) a sphere with environment mapping
-        /*
-        {
-            //// create object by reading an obj mesh
-            auto sphere2 = Add_Obj_Mesh_Object("obj/sphere.obj");
-
-            //// set object's transform
-            Matrix4f t;
-            t << .6, 0, 0, 0,
-                0, .6, 0, -.5,
-                0, 0, .6, 1,
-                0, 0, 0, 1;
-            sphere2->Set_Model_Matrix(t);
-
-            //// bind shader to object
-            sphere2->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("environment")); // bind shader to object
-        }
-        */
-
-        //// Here we create a mesh object with two triangle specified using a vertex array and a triangle array.
-        //// This is an example showing how to create a mesh object without reading an .obj file. 
-        //// If you are creating your own L-system, you may use this function to visualize your mesh.
-        // {
-        //     std::vector<Vector3> vertices = { Vector3(0.5, 0, 0), Vector3(1, 0, 0), Vector3(1, 1, 0), Vector3(0, 1, 0) };
-        //     std::vector<Vector3i> elements = { Vector3i(0, 1, 2), Vector3i(0, 2, 3) };
-        //     auto obj = Add_Tri_Mesh_Object(vertices, elements);
-        //     // ! you can also set uvs 
-        //     obj->mesh.Uvs() = { Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1) };
-
-        //     Matrix4f t;
-        //     t << 1, 0, 0, -0.5,
-        //         0, 1, 0, -1.5,
-        //         0, 0, 1, 0,
-        //         0, 0, 0, 1;
-
-        //     obj->Set_Model_Matrix(t);
-
-        //     // obj->Add_Texture("tex_color", OpenGLTextureLibrary::Get_Texture("buzz_color"));
-
-        //     obj->Add_Shader_Program(OpenGLShaderLibrary::Get_Shader("basic"));
-        // }
 
         //// This for-loop updates the rendering model for each object on the list
         for (auto &mesh_obj : mesh_object_array){
@@ -591,7 +419,7 @@ public:
             amongUs->Set_Model_Matrix(t);
         }
         
-        //earth rotating motion
+        // reference: https://stackoverflow.com/questions/59752923/orbiting-and-spinning-rotation-in-opengl-using-glm
         if (earth) {
             
             float elapsedTime = GLfloat(clock() - startTime) / CLOCKS_PER_SEC;
@@ -658,16 +486,15 @@ public:
 
         }
 
-        // //maon rotating and revoling motion
+        
         if (moon) {
             
             float elapsedTime = GLfloat(clock() - startTime) / CLOCKS_PER_SEC;
 
-            // Spin speed 
+            
             float moonSpinAngle = elapsedTime* 1.5f;   
             float moonOrbitAngle = elapsedTime * 0.3f;
 
-            // --- Moon transforms ---
             Matrix4f spin, o, t, scale, earthd;
 
             // Spin
@@ -691,7 +518,8 @@ public:
                 0, 0, 1, 0,
                 0, 0, 0, 1;
 
-            // Small scaling
+            
+            //scale moon
             scale <<
                 .5, 0, 0, 0,
                 0, .5, 0, 0,
@@ -728,7 +556,7 @@ public:
             float aSpinAngle = elapsedTime* 1.5f;   
             float aOrbitAngle = elapsedTime * 0.3f;
 
-            // --- Moon transforms ---
+            
             Matrix4f spin, o, t, scale, marsd;
 
             // Spin
@@ -746,24 +574,24 @@ public:
                 0, 0, 0, 1;
 
             
+            // translate away from mars
             t <<
                 1, 0, 0, 10,  
                 0, 1, 0, 5,
                 0, 0, 1, 0,
                 0, 0, 0, 1;
 
-            
+            //scale down
             scale <<
                 .5, 0, 0, 0,
                 0, .5, 0, 0,
                 0, 0, .5, 0,
                 0, 0, 0, 1;
 
-            ///earth stuff
-                // Spin speed (Earth day)
+            ///mars stuff
+            
             float espin = elapsedTime * .2f; ;   
 
-            //// set object's transform
             
             float theta = 3 * PI / 2;
             
@@ -774,7 +602,6 @@ public:
                 0, 0, 1, -50,
                 0, 0, 0, 1;
             
-
             asteroid->Set_Model_Matrix(marsd  * o * t * spin * scale);
 
         }
@@ -819,15 +646,9 @@ public:
                 0, 0, .5, 0,
                 0, 0, 0, 1;
 
-        
-            tilt <<
-                1, 0,0, 0,
-                0,  cos(45.0f * PI / 180.0f), -sin(45.0f * PI / 180.0f), 0,
-                0,  sin(45.0f * PI / 180.0f),  cos(45.0f * PI / 180.0f), 0,
-                0, 0, 0, 1;
-
-            ///earth stuff
-                // Spin speed (Earth day)
+    
+            ///mars stuff
+                
             float espin = elapsedTime * .2f; ;   
 
             //// set object's transform
@@ -854,7 +675,7 @@ public:
             float aSpinAngle = elapsedTime* 1.5f;   
             float aOrbitAngle = elapsedTime * .3f;
 
-            // --- Moon transforms ---
+            
             Matrix4f spin, o, t, scale, marsd;
 
             // Spin
@@ -889,11 +710,10 @@ public:
                 
             float espin = elapsedTime * .2f; ;   
 
-            //// set object's transform
             
             float theta = 3 * PI / 2;
             
-            // rotate around y axis and translate
+            
             marsd << 
                 1, 0, 0, 15,
                 0, 1, 0, 5,
